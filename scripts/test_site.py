@@ -12,6 +12,9 @@ def main() -> None:
             assert page.locator("img").count() > 0, path
             assert page.evaluate("document.documentElement.scrollWidth <= document.documentElement.clientWidth"), path
         page.goto(BASE + "/index.html", wait_until="networkidle")
+        assert page.locator(".nav a[href='photo-deck.html']").count() == 1
+        assert page.locator(".section-tabs .tab-level-one").count() == 0
+        assert page.locator(".section-tabs .tab-level-two").count() == 1
         page.locator("button[data-size='xlarge']").click()
         assert page.locator("body").get_attribute("data-size") == "xlarge"
         page.locator("button[data-theme='blue']").click()

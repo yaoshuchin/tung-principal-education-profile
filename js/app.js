@@ -47,20 +47,17 @@ function bindPreferences() {
 
 function installSectionTabs() {
   if ($('.section-tabs')) return;
+  const existingNav = $('.nav');
+  if (existingNav && !existingNav.querySelector('a[href="photo-deck.html"]')) {
+    const photoThemeLink = document.createElement('a');
+    photoThemeLink.href = 'photo-deck.html';
+    photoThemeLink.textContent = '照片主題';
+    existingNav.append(photoThemeLink);
+  }
   const tabs = document.createElement('nav');
   tabs.className = 'section-tabs';
   tabs.setAttribute('aria-label', '網站二層導覽');
-  tabs.innerHTML = `
-    <div class="tab-level-one">
-      <a class="tab-active" href="index.html#story">人物</a>
-      <a href="index.html#flywheel">教育飛輪</a>
-      <a href="index.html#journey">完整歷程</a>
-      <a href="index.html#awards">教育成果</a>
-      <a href="record.html">完整檔案</a>
-      <a href="gallery.html">照片庫</a>
-      <a href="photo-deck.html">照片主題集</a>
-      <a href="share.html">QR 分享</a>
-    </div>
+  const secondLevel = `
     <div class="tab-level-two">
       <span>快速前往</span>
       <a href="index.html#story">教育信念</a>
@@ -71,6 +68,17 @@ function installSectionTabs() {
       <a href="gallery.html#sport-international">運動／國際照片</a>
       <a href="photo-deck.html#theme-19">冠軍與國際主題</a>
     </div>`;
+  tabs.innerHTML = existingNav ? secondLevel : `
+    <div class="tab-level-one">
+      <a class="tab-active" href="index.html#story">人物</a>
+      <a href="index.html#flywheel">教育飛輪</a>
+      <a href="index.html#journey">完整歷程</a>
+      <a href="index.html#awards">教育成果</a>
+      <a href="record.html">完整檔案</a>
+      <a href="gallery.html">照片庫</a>
+      <a href="photo-deck.html">照片主題</a>
+      <a href="share.html">QR 分享</a>
+    </div>${secondLevel}`;
   document.querySelector('header')?.after(tabs);
 }
 
