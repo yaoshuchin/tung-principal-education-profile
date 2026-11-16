@@ -58,6 +58,7 @@ function installSectionTabs() {
       <a href="index.html#awards">教育成果</a>
       <a href="record.html">完整檔案</a>
       <a href="gallery.html">照片庫</a>
+      <a href="photo-deck.html">照片主題集</a>
       <a href="share.html">QR 分享</a>
     </div>
     <div class="tab-level-two">
@@ -68,6 +69,7 @@ function installSectionTabs() {
       <a href="index.html#awards">主要獎項</a>
       <a href="record.html#career">行政歷程</a>
       <a href="gallery.html#sport-international">運動／國際照片</a>
+      <a href="photo-deck.html#theme-19">冠軍與國際主題</a>
     </div>`;
   document.querySelector('header')?.after(tabs);
 }

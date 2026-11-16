@@ -7,7 +7,7 @@ def main() -> None:
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
         page = browser.new_page(viewport={"width": 1440, "height": 1000})
-        for path in ("/index.html", "/record.html", "/gallery.html", "/share.html"):
+        for path in ("/index.html", "/record.html", "/gallery.html", "/photo-deck.html", "/share.html"):
             page.goto(BASE + path, wait_until="networkidle")
             assert page.locator("img").count() > 0, path
             assert page.evaluate("document.documentElement.scrollWidth <= document.documentElement.clientWidth"), path
@@ -22,7 +22,7 @@ def main() -> None:
         assert page.locator("figure[data-category='character-care']:visible").count() > 0
         assert page.locator("figure[data-category='sport-international']:visible").count() == 0
         page.set_viewport_size({"width": 390, "height": 844})
-        for path in ("/index.html", "/record.html", "/gallery.html", "/share.html"):
+        for path in ("/index.html", "/record.html", "/gallery.html", "/photo-deck.html", "/share.html"):
             page.goto(BASE + path, wait_until="networkidle")
             assert page.evaluate("document.documentElement.scrollWidth <= document.documentElement.clientWidth"), path
         browser.close()
