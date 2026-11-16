@@ -76,7 +76,16 @@ def main() -> None:
     photo_records = json.loads(ALL_PHOTOS.read_text(encoding="utf-8"))
     by_page = {}
     PUBLIC_PHOTOS.mkdir(parents=True, exist_ok=True)
+    for existing in PUBLIC_PHOTOS.glob("*.jpg"):
+        try:
+            existing_page = int(existing.name[1:4])
+        except ValueError:
+            continue
+        if existing_page not in PAGE_RANGE:
+            existing.unlink()
     for record in photo_records:
+        if record["page"] not in PAGE_RANGE:
+            continue
         source = ROOT / record["file"]
         if source.name in {"p046-img01-f9c3e2b346.png", "p046-img03-4a6534fc1e.png", "p046-img05-a4294c8f8a.png", "p046-img07-2cdbd2db47.png", "p046-img09-a70a330982.png"}:
             continue
