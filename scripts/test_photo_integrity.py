@@ -12,6 +12,15 @@ with sync_playwright() as p:
     assert not broken, broken
     object_fits = page.locator(".gallery-card img").evaluate_all("imgs => [...new Set(imgs.map(img => getComputedStyle(img).objectFit))]")
     assert object_fits == ["contain"], object_fits
+    assert page.locator(".section-tabs").count() == 1
+    assert page.locator(".tab-level-one").count() == 1
+    assert page.locator(".tab-level-two").count() == 1
+    first_image = page.locator(".gallery-card img").first
+    first_image.click()
+    assert page.locator(".lightbox-modal.is-open").count() == 1
+    assert page.locator(".lightbox-modal img").get_attribute("src")
+    page.locator(".lightbox-close").click()
+    assert page.locator(".lightbox-modal.is-open").count() == 0
     categories = ["sport-international", "character-care", "reading-vision", "innovation-community", "leadership", "profile-awards"]
     for category in categories:
         page.locator(f"button[data-filter='{category}']").click()
@@ -21,5 +30,8 @@ with sync_playwright() as p:
     page.goto(BASE + "/index.html", wait_until="networkidle")
     portrait_fit = page.locator(".hero-portrait img").evaluate("img => getComputedStyle(img).objectFit")
     assert portrait_fit == "contain", portrait_fit
+    page.locator("button[data-size='xlarge']").click()
+    assert page.locator("body").get_attribute("data-size") == "xlarge"
+    assert page.locator(".section-tabs").count() == 1
     browser.close()
 print("photo integrity tests passed")

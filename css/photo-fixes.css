@@ -5,3 +5,55 @@
 .record-photos img { height: 145px; }
 @media (max-width: 850px) { .gallery-card img { height: 180px; } }
 @media (max-width: 520px) { .gallery-card img { height: 240px; } }
+
+/* 全站閱讀尺度：預設就比原版大，仍保留中／大／特大切換。 */
+body[data-size="medium"] { --body: 20px; }
+body[data-size="large"] { --body: 22px; }
+body[data-size="xlarge"] { --body: 25px; }
+.lead, .section-desc, .gallery-hero > p:last-child, .share-hero p:last-child { font-size: calc(var(--body) * 1.05) !important; }
+.hero-portrait { width: min(470px, 100%) !important; }
+.hero-portrait img { height: 460px !important; }
+.photo-strip { grid-template-columns: repeat(4, 1fr) !important; }
+.photo-strip img { height: 220px !important; }
+.record-photos { grid-template-columns: repeat(4, 1fr) !important; }
+.record-photos img { height: 210px !important; }
+.gallery-grid { grid-template-columns: repeat(3, 1fr) !important; }
+.gallery-card img { height: 320px !important; cursor: zoom-in; }
+
+/* 二層式網站標籤，第一層是章節，第二層是常用子內容。 */
+.section-tabs { position: sticky; top: 78px; z-index: 8; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 94%, transparent); backdrop-filter: blur(14px); }
+.tab-level-one, .tab-level-two { width: min(1180px, 90vw); margin: auto; display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: thin; }
+.tab-level-one { padding: 10px 0 6px; }
+.tab-level-two { border-top: 1px solid color-mix(in srgb, var(--line) 65%, transparent); padding: 6px 0 9px; gap: 18px; }
+.tab-level-one a, .tab-level-two a, .tab-level-two span { white-space: nowrap; font-size: 14px; font-weight: 800; padding: 5px 11px; }
+.tab-level-one a:hover, .tab-level-one a.tab-active, .tab-level-two a:hover { color: var(--hot); }
+.tab-level-two span { color: var(--muted); font-size: 12px; padding-left: 0; }
+
+/* 點擊照片後的放大檢視。 */
+body.lightbox-open { overflow: hidden; }
+.lightbox-modal { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; padding: 5vh 5vw; background: rgba(10, 26, 33, .9); opacity: 0; pointer-events: none; transition: opacity .2s ease; }
+.lightbox-modal.is-open { opacity: 1; pointer-events: auto; }
+.lightbox-inner { max-width: min(1200px, 94vw); max-height: 90vh; text-align: center; }
+.lightbox-inner img { display: block; max-width: 100%; max-height: 78vh; width: auto; height: auto; object-fit: contain; margin: auto; background: #f6f3eb; box-shadow: 0 24px 70px rgba(0,0,0,.35); }
+.lightbox-inner p { margin: 14px 0 0; color: #fff; font-size: 15px; }
+.lightbox-close { position: absolute; top: 18px; right: 28px; border: 0; background: transparent; color: #fff; font-size: 42px; line-height: 1; cursor: pointer; }
+.lightbox-close:focus-visible, .lightbox-modal img:focus-visible { outline: 3px solid var(--sun); outline-offset: 4px; }
+@media (max-width: 850px) {
+  .section-tabs { top: 66px; }
+  .tab-level-one, .tab-level-two { width: 90vw; }
+  .photo-strip { grid-template-columns: repeat(2, 1fr) !important; }
+  .photo-strip img { height: 220px !important; }
+  .record-photos { grid-template-columns: repeat(2, 1fr) !important; }
+  .record-photos img { height: 220px !important; }
+  .gallery-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .gallery-card img { height: 270px !important; }
+}
+@media (max-width: 520px) {
+  .tab-level-one, .tab-level-two { width: 90vw; }
+  .tab-level-one a, .tab-level-two a { font-size: 13px; }
+  .photo-strip img, .record-photos img { height: 200px !important; }
+  .gallery-grid { grid-template-columns: 1fr !important; }
+  .gallery-card img { height: 330px !important; }
+  .lightbox-modal { padding: 8vh 3vw 4vh; }
+  .lightbox-inner img { max-height: 72vh; }
+}
