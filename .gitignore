@@ -1,0 +1,5 @@
+analysis/
+*.pdf
+*.log
+new2-home*.png
+__pycache__/
