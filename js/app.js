@@ -10,6 +10,12 @@ function loadPhotoFixes() {
   link.rel = 'stylesheet';
   link.href = 'css/photo-fixes.css';
   link.dataset.photoFixes = 'true';
+  link.onerror = () => {
+    const style = document.createElement('style');
+    style.dataset.photoFixesFallback = 'true';
+    style.textContent = '.hero-portrait img,.photo-strip img,.record-photos img,.gallery-card img{object-fit:contain!important;object-position:center!important;background:var(--soft,#f6f3eb)}';
+    document.head.append(style);
+  };
   document.head.append(link);
 }
 
