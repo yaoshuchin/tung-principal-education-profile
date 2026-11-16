@@ -1,0 +1,7 @@
+/* 照片完整性：不裁切人物、團體照與教育圖標。 */
+.hero-portrait img, .photo-strip img, .record-photos img, .gallery-card img { object-fit: contain !important; object-position: center !important; background: var(--soft, #f6f3eb); }
+.gallery-card img { height: 220px; }
+.photo-strip img { height: 150px; }
+.record-photos img { height: 145px; }
+@media (max-width: 850px) { .gallery-card img { height: 180px; } }
+@media (max-width: 520px) { .gallery-card img { height: 240px; } }

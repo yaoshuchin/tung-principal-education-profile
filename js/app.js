@@ -4,6 +4,15 @@ const PRIMARY_URL = 'https://is.gd/Htl7hl';
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 
+function loadPhotoFixes() {
+  if (document.querySelector('link[data-photo-fixes]')) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'css/photo-fixes.css';
+  link.dataset.photoFixes = 'true';
+  document.head.append(link);
+}
+
 function applyPreferences() {
   const theme = localStorage.getItem('new2-theme') || 'light';
   const size = localStorage.getItem('new2-size') || 'medium';
@@ -31,20 +40,12 @@ function bindPreferences() {
 }
 
 function captionFor(record) {
-  const labels = {
-    'sport-international': '運動／國際',
-    'character-care': '品格／陪伴',
-    'reading-vision': '閱讀／願景',
-    'innovation-community': '科技／社群',
-    leadership: '團隊／領導',
-    'profile-awards': '人物／獲獎',
-  };
-  return `${labels[record.category] || '教育現場'} · PDF 第 ${record.page} 頁`;
+  return record.caption || `教育現場照片 · PDF 第 ${record.page} 頁`;
 }
 
 function usablePhotos(records) {
   const browserFormats = new Set(['jpg', 'jpeg', 'png', 'gif', 'webp']);
-  return records.filter((record) => record.width * record.height >= 50000 && Math.max(record.width, record.height) <= 1200 && browserFormats.has(record.file.split('.').pop().toLowerCase()));
+  return records.filter((record) => record.complete === true && record.quality === 'verified' && record.width * record.height >= 50000 && Math.max(record.width, record.height) <= 1200 && browserFormats.has(record.file.split('.').pop().toLowerCase()));
 }
 
 function makeFigure(record, loading = 'lazy') {
@@ -121,6 +122,7 @@ function renderShare() {
 }
 
 async function init() {
+  loadPhotoFixes();
   applyPreferences();
   bindPreferences();
   const [content, photoIndex] = await Promise.all([
